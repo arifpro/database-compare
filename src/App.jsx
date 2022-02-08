@@ -1,10 +1,12 @@
-import CustomerCard from "./components/CustomerCard";
+// import Test from "./components/Test";
+import Layout from "./components/Layout/Layout";
+// import Main from "./components/Main/main";
 
 const App = () => {
   return (
-    <div>
-      <CustomerCard />
-    </div>
+    <Layout>
+      {/* <Test /> */}
+    </Layout>
   );
 };
 

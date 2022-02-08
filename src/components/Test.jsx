@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { orderFood } from "../redux/slices/customer.js";
 
 // main function
-const CustomerCard = ({ name }) => {
+const Test = ({ name }) => {
   const dispatch = useDispatch();
   const [orders, setOrders] = useState("");
 
@@ -39,4 +39,4 @@ const CustomerCard = ({ name }) => {
   );
 };
 
-export default CustomerCard;
+export default Test;
