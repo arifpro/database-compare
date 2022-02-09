@@ -1,3 +1,6 @@
+import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
+
 const DatabaseForm = ({ id, information, handleFormEdit, handleConnect }) => {
   const adName = "ad" + id;
   const acName = "ac" + id;
@@ -10,7 +13,7 @@ const DatabaseForm = ({ id, information, handleFormEdit, handleConnect }) => {
         <input
           id={adName}
           name="url"
-          value={information.url}
+          // value={information.url}
           onChange={handleFormEdit}
         />
 
@@ -18,7 +21,7 @@ const DatabaseForm = ({ id, information, handleFormEdit, handleConnect }) => {
         <input
           id={acName}
           name="username"
-          value={information.username}
+          // value={information.username}
           onChange={handleFormEdit}
         />
 
@@ -26,13 +29,17 @@ const DatabaseForm = ({ id, information, handleFormEdit, handleConnect }) => {
         <input
           id={paName}
           name="password"
-          value={information.password}
+          // value={information.password}
           onChange={handleFormEdit}
         />
 
-        <button type="button" onClick={handleConnect}>
+        <Button
+          variant="contained"
+          endIcon={<SendIcon />}
+          onClick={handleConnect}
+        >
           连接
-        </button>
+        </Button>
       </form>
     </section>
   );

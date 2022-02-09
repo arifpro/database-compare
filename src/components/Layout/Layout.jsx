@@ -1,7 +1,9 @@
+import { Box, Container, CssBaseline, Grid } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import { API_URL } from "../../api";
 import { Aside, Main, Header } from "../index";
+import Main2 from '../Main2'
 
 const Layout = () => {
   const [state, setState] = useState({
@@ -46,6 +48,18 @@ const Layout = () => {
       origin: [],
     },
   });
+
+  const resetTable = () => {
+    setState({
+      ...state,
+      tableList: {
+        same: [],
+        different: [],
+        local: [],
+        origin: [],
+      },
+    });
+  };
 
   //在远程表中添加字段
   const originAddColumn = (e) => {
@@ -99,7 +113,8 @@ const Layout = () => {
   };
 
   const checkTable = (e) => {
-    const tableName = e.target.dataset.name;
+    // const tableName = e.target.dataset.name;
+    const tableName = e.target.innerText;
     console.log("执行表格比对", e);
 
     //执行表格对比
@@ -135,12 +150,24 @@ const Layout = () => {
 
   return (
     <>
-      <Header sub={state.sub} obj={state.obj} handleLoadTable={loadTableList} />
+      <Header sub={state.sub} obj={state.obj} resetTable={resetTable} handleLoadTable={loadTableList} />
 
-      <section style={{ display: "flex", justifyContent: "space-around" }}>
-        <Aside tableList={state.tableList} checkTable={checkTable} />
-        <Main columnList={state.columnList} originAddColumn={originAddColumn} />
-      </section>
+      <Container component="main">
+      <Box sx={{ m: 10, mt: 3 }}>
+        <Grid container spacing={2} align="center">
+          <Grid item xs={6} sx={{display: 'flex', justifyContent: 'left'}}>
+            <Aside tableList={state.tableList} checkTable={checkTable} />
+          </Grid>
+          <Grid item xs={6}>
+            <Main
+              columnList={state.columnList}
+              originAddColumn={originAddColumn}
+            />
+            <Main2 />
+          </Grid>
+        </Grid>
+      </Box>
+      </Container>
     </>
   );
 };

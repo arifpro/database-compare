@@ -18,31 +18,30 @@ li.green {
   color: green;
   cursor: pointer;
 }
+
 li.orange {
   color: orange;
   cursor: pointer;
 }
+
 li.blue {
   color: blue;
   cursor: pointer;
 }
+
 li.grey {
   color: grey;
   cursor: pointer;
 }
 
-header {
-  display: grid;
-  grid-template-columns: 40% 5% 40%;
-  justify-items: stretch;
-  padding-bottom: 15px;
-  border-bottom: 1px solid black;
-  justify-items: center;
-  align-items: center;
-}
 form.databaseForm {
   padding: 0 5rem;
 }
+
 label {
   margin-left: 1rem;
+}
+
+label[id^="mui-"] {
+  margin-left: 0;
 }
