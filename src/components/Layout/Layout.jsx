@@ -163,7 +163,8 @@ const Layout = () => {
               columnList={state.columnList}
               originAddColumn={originAddColumn}
             />
-            <Main2 />
+            <Main2 columnList={state.columnList}
+              originAddColumn={originAddColumn} />
           </Grid>
         </Grid>
       </Box>
