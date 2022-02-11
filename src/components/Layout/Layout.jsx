@@ -1,9 +1,13 @@
-import { Box, Container, CssBaseline, Grid } from "@mui/material";
+import { Box,
+  //  Container, CssBaseline,
+    Grid } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import { API_URL } from "../../api";
-import { Aside, Main, Header } from "../index";
-import Main2 from '../Main2'
+import { Aside,
+  //  Main, 
+  Header } from "../index";
+import Main2 from "../Main2";
 
 const Layout = () => {
   const [state, setState] = useState({
@@ -97,7 +101,7 @@ const Layout = () => {
 
   //加载表格列表
   const loadTableList = (tableList) => {
-    console.log("Index加载tableList:", tableList);
+    console.log("tableList || Layout", tableList);
 
     const same = tableList?.data?.filter((ele) => ele.tag === 0);
     const local = tableList?.data?.filter((ele) => ele.tag === -1);
@@ -140,7 +144,7 @@ const Layout = () => {
     axios
       .post(`${API_URL}/database/checktable`, data)
       .then((res) => {
-        console.log(res);
+        console.log("layout", res);
         setState({ ...state, columnList: res.data.data, tableName: tableName });
       })
       .catch((err) => console.log(err));
@@ -150,25 +154,42 @@ const Layout = () => {
 
   return (
     <>
-      <Header sub={state.sub} obj={state.obj} resetTable={resetTable} handleLoadTable={loadTableList} />
+      <Header
+        sub={state.sub}
+        obj={state.obj}
+        resetTable={resetTable}
+        handleLoadTable={loadTableList}
+      />
 
-      <Container component="main">
-      <Box sx={{ m: 10, mt: 3 }}>
-        <Grid container spacing={2} align="center">
-          <Grid item xs={6} sx={{display: 'flex', justifyContent: 'left'}}>
-            <Aside tableList={state.tableList} checkTable={checkTable} />
+      {/* <Container component="main"> */}
+      {(state.tableList.same.length > 0 ||
+        state.tableList.different.length > 0 ||
+        state.tableList.local.length > 0 ||
+        state.tableList.origin.length > 0) && (
+        <Box sx={{ m: 10, mt: 3 }}>
+          <Grid container spacing={2} align="center">
+            <Grid item xs={6} sx={{ display: "flex", justifyContent: "left" }}>
+              <Aside tableList={state.tableList} checkTable={checkTable} />
+            </Grid>
+            {(state.columnList.same.length > 0 ||
+              state.columnList.different.length > 0 ||
+              state.columnList.local.length > 0 ||
+              state.columnList.origin.length > 0) && (
+              <Grid item xs={6}>
+                <Main2
+                  columnList={state.columnList}
+                  originAddColumn={originAddColumn}
+                />
+                {/* <Main
+                  columnList={state.columnList}
+                  originAddColumn={originAddColumn}
+                /> */}
+              </Grid>
+            )}
           </Grid>
-          <Grid item xs={6}>
-            <Main
-              columnList={state.columnList}
-              originAddColumn={originAddColumn}
-            />
-            <Main2 columnList={state.columnList}
-              originAddColumn={originAddColumn} />
-          </Grid>
-        </Grid>
-      </Box>
-      </Container>
+        </Box>
+      )}
+      {/* </Container> */}
     </>
   );
 };

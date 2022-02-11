@@ -10,27 +10,30 @@ import CompareArrowsRoundedIcon from "@mui/icons-material/CompareArrowsRounded";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 const Header = (props) => {
-  const [state, setState] = useState(props);
+  const [state, setState] = useState({
+    sub: props.sub,
+    obj: props.obj,
+  });
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    console.log("state || Header", state);
-  }, [state]);
+  // useEffect(() => {
+  //   setState(props);
+  // }, [props]);
   /*
     事件监听
     数据库表单输入
   */
-  const handleFormEdit = (event) => {
-    const { form, name, value } = event.target;
-    const databaseName = form.id;
+  // const handleFormEdit = (event) => {
+  //   const { form, name, value } = event.target;
+  //   const databaseName = form.id;
 
-    let _state = props;
-    _state[databaseName][name] = value;
-    setState(_state);
-  };
+  //   let _state = props;
+  //   _state[databaseName][name] = value;
+  //   setState(_state);
+  // };
 
   const handleConnect2 = (data) => {
-    console.log("handleConnect2", data);
+    console.log("data || handleConnect2", data);
     const { databaseName, url, username, password } = data;
 
     axios
@@ -38,13 +41,14 @@ const Header = (props) => {
         `${API_URL}/database/conn?url=${url}&username=${username}&password=${password}`
       )
       .then((res) => {
-        console.log("执行连接", res);
+        console.log("res || handleConnect2", res);
         // console.log("props", props);
-        // let _state = props;
-        // _state[databaseName].connected = true;
-        // _state[databaseName].databaseList = res.data;
+        let _state = state;
+        
+        _state[databaseName].connected = true;
+        _state[databaseName].databaseList = res.data;
         // console.log("_state", _state);
-        // setState(_state);
+        setState(_state);
       });
   };
 
@@ -52,25 +56,25 @@ const Header = (props) => {
     事件监听 
     执行数据库连接
   */
-  const databaseConnect = (e) => {
-    //form的id对应state中对应的【数据库链接对象】的键
-    const databaseName = e.target.form.id;
-    const url = props[databaseName].url;
-    const username = props[databaseName].username;
-    const password = props[databaseName].password;
+  // const databaseConnect = (e) => {
+  //   //form的id对应state中对应的【数据库链接对象】的键
+  //   const databaseName = e.target.form.id;
+  //   const url = props[databaseName].url;
+  //   const username = props[databaseName].username;
+  //   const password = props[databaseName].password;
 
-    axios
-      .get(
-        `${API_URL}/database/conn?url=${url}&username=${username}&password=${password}`
-      )
-      .then((res) => {
-        console.log("执行连接", res);
-        let _state = props;
-        _state[databaseName].connected = true;
-        _state[databaseName].databaseList = res.data;
-        setState(_state);
-      });
-  };
+  //   axios
+  //     .get(
+  //       `${API_URL}/database/conn?url=${url}&username=${username}&password=${password}`
+  //     )
+  //     .then((res) => {
+  //       console.log("执行连接", res);
+  //       let _state = props;
+  //       _state[databaseName].connected = true;
+  //       _state[databaseName].databaseList = res.data;
+  //       setState(_state);
+  //     });
+  // };
 
   /*
     事件监听
@@ -119,7 +123,7 @@ const Header = (props) => {
     axios
       .post(`${API_URL}/database/contrast`, data)
       .then((res) => {
-        console.log("数据库比对", res);
+        console.log("res || header", res);
         setLoading(false);
         props.handleLoadTable(res.data);
       })
@@ -128,6 +132,8 @@ const Header = (props) => {
         console.log(err);
       });
   };
+
+  console.log("connected || Header", {sub: props.sub.connected, obj: props.obj.connected});
 
   return (
     <div
@@ -141,11 +147,21 @@ const Header = (props) => {
       <Box component="form" noValidate sx={{ mt: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={5}>
-            <DatabaseForm2
-              title="sub"
-              information={props.sub}
-              handleConnect={handleConnect2}
-            />
+            {state.sub.connected ? (
+              <DatabaseInfo
+                id="sub"
+                information={props.sub}
+                databaseSwitch={databaseSwitch}
+                databaseBreak={databaseBreak}
+              />
+            ) : (
+              <DatabaseForm2
+                title="本地"
+                dbName="sub"
+                information={props.sub}
+                handleConnect={handleConnect2}
+              />
+            )}
           </Grid>
           <Grid
             item
@@ -167,11 +183,21 @@ const Header = (props) => {
             </LoadingButton>
           </Grid>
           <Grid item xs={5}>
-            <DatabaseForm2
-              title="obj"
-              information={props.obj}
-              handleConnect={handleConnect2}
-            />
+            {state.obj.connected ? (
+              <DatabaseInfo
+                id="obj"
+                information={props.obj}
+                databaseSwitch={databaseSwitch}
+                databaseBreak={databaseBreak}
+              />
+            ) : (
+              <DatabaseForm2
+                title="远程"
+                dbName="obj"
+                information={props.obj}
+                handleConnect={handleConnect2}
+              />
+            )}
           </Grid>
         </Grid>
       </Box>

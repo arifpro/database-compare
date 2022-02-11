@@ -45,3 +45,37 @@ label {
 label[id^="mui-"] {
   margin-left: 0;
 }
+
+.customPaper {
+  background-color: #fff;
+  color: rgba(0, 0, 0, 0.87);
+  -webkit-transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border-radius: 4px;
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+    0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+  /* box-shadow: 0px 0px 10px #ccc; */
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.customPaper td {
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+  display: table-cell;
+  vertical-align: inherit;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  text-align: left;
+  padding-left: 5px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.customPaper thead td {
+  font-weight: 700;
+}
+
+.MuiTableCell-body {
+  padding-left: 15px !important;
+}

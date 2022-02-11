@@ -15,7 +15,12 @@ import { useState } from "react";
 
 const theme = createTheme();
 
-export default function DatabaseForm2({ title, information, handleConnect }) {
+export default function DatabaseForm2({
+  title,
+  dbName,
+  information,
+  handleConnect,
+}) {
   const [form, setForm] = useState({
     url: information.url,
     username: information.username,
@@ -32,16 +37,12 @@ export default function DatabaseForm2({ title, information, handleConnect }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const data = {
-      databaseName: title,
+    handleConnect({
+      databaseName: dbName,
       url: form.url,
       username: form.username,
       password: form.password,
-    };
-
-    // console.log("data", data);
-
-    handleConnect(data);
+    });
   };
 
   return (
@@ -63,7 +64,7 @@ export default function DatabaseForm2({ title, information, handleConnect }) {
             <Avatar sx={{ bgcolor: "primary.main", mr: 1 }}>
               <StorageRoundedIcon />
             </Avatar>
-            数据库 {title}
+            {title} 数据库
           </Typography>
           <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>

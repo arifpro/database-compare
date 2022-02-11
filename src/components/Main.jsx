@@ -1,3 +1,4 @@
+// import { Paper } from "@mui/material";
 import { useState } from "react";
 import CheckBox from "./common/CheckBox";
 
@@ -51,49 +52,61 @@ const Main = (props) => {
 
   return (
     <main>
-      <form>
-        <CheckBox title="相同" name="same" state={state} setState={setState} />
-        <CheckBox
-          title="差别"
-          name="different"
-          state={state}
-          setState={setState}
-        />
-        <CheckBox title="本地" name="local" state={state} setState={setState} />
-        <CheckBox
-          title="远程"
-          name="origin"
-          state={state}
-          setState={setState}
-        />
-      </form>
-
       {(props.columnList.same.length > 0 ||
         props.columnList.different.length > 0 ||
         props.columnList.local.length > 0 ||
         props.columnList.origin.length > 0) && (
-        <table rules="all">
-          <thead>
-            <tr>
-              <th colSpan={3}>本地</th>
-              <th colSpan={2}>远程</th>
-            </tr>
-            <tr>
-              <td></td>
-              <td>名称</td>
-              <td>类型</td>
-              <td>名称</td>
-              <td>类型</td>
-              <td>操作</td>
-            </tr>
-          </thead>
-          <tbody>
-            {state.same && showColumnList("same", "green", "相同")}
-            {state.different && showColumnList("different", "orange", "相异")}
-            {state.local && showColumnList("local", "blue", "本地")}
-            {state.origin && showColumnList("origin", "grey", "远程")}
-          </tbody>
-        </table>
+        <>
+          <div>
+            <CheckBox
+              title="相同"
+              name="same"
+              state={state}
+              setState={setState}
+            />
+            <CheckBox
+              title="差别"
+              name="different"
+              state={state}
+              setState={setState}
+            />
+            <CheckBox
+              title="本地"
+              name="local"
+              state={state}
+              setState={setState}
+            />
+            <CheckBox
+              title="远程"
+              name="origin"
+              state={state}
+              setState={setState}
+            />
+          </div>
+
+          <table rules="all" className="customPaper">
+            <thead>
+              <tr>
+                <th colSpan={3}>本地</th>
+                <th colSpan={2}>远程</th>
+              </tr>
+              <tr>
+                <td></td>
+                <td>名称</td>
+                <td>类型</td>
+                <td>名称</td>
+                <td>类型</td>
+                <td>操作</td>
+              </tr>
+            </thead>
+            <tbody>
+              {state.same && showColumnList("same", "green", "相同")}
+              {state.different && showColumnList("different", "orange", "相异")}
+              {state.local && showColumnList("local", "blue", "本地")}
+              {state.origin && showColumnList("origin", "grey", "远程")}
+            </tbody>
+          </table>
+        </>
       )}
     </main>
   );
